@@ -19,3 +19,6 @@ $ ./msh
 
 
 
+#TODO
+
+arithmetic operations support
