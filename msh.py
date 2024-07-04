@@ -17,14 +17,14 @@ def execute_cmd(cmd) -> None:
             fdin = os.dup(s_in)
 
             # iterate over all the cmds that are piped
-            for cmd in cmd.split("|"):
+            for cmmd in cmd.split("|"):
                 # fdin will be stdin if it's the first iteration
                 # and the readable end of the pipe if not.
                 os.dup2(fdin, 0)
                 os.close(fdin)
 
                 # restore stdout if this is the last cmd
-                if cmd == cmd.split("|")[-1]:
+                if cmmd == cmd.split("|")[-1]:
                     fdout = os.dup(s_out)
                 else:
                     fdin, fdout = os.pipe()
@@ -34,9 +34,9 @@ def execute_cmd(cmd) -> None:
                 os.close(fdout)
 
                 try:
-                    subprocess.run(cmd.strip().split())
+                    sub_run(cmmd.strip().split())
                 except Exception:
-                    print("msh: commmand not found: {}".format(cmd.strip()))
+                    print("msh: commmand not found: {}".format(cmmd.strip()))
 
             # restore stdout and stdin
             os.dup2(s_in, 0)
@@ -75,6 +75,9 @@ def main() -> None:
             except KeyboardInterrupt as e:
                 print(e)
                 continue
+
+            except EOFError:
+                break
 
 
 if '__main__' == __name__:
