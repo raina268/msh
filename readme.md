@@ -21,4 +21,5 @@ $ ./msh
 
 #TODO
 
-arithmetic operations support
+[ ] arithmetic operations support
+[ ] implement config file  parser

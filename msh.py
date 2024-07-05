@@ -1,10 +1,32 @@
 #!/bin/python3
 
 from subprocess import run as sub_run
+from sys import argv
 import os
 
 
-def execute_cmd(cmd) -> None:
+__version__ = 1.0
+
+
+h = os.uname()[1]
+u = os.getlogin()
+
+def cwd() -> str:
+    # current working directory
+
+    current_dir = os.getcwd()
+    home_dir = os.path.expanduser("~")
+
+    if current_dir.startswith(home_dir):
+        current_dir = current_dir.replace(home_dir, "~", 1)
+
+    return current_dir
+
+
+w = cwd()
+
+
+def execute_cmd(cmd):
     """execute commands and handle piping"""
     try:
         if "|" in cmd:
@@ -55,15 +77,30 @@ def msh_cd(path):
     except Exception:
         print("cd: no such file or directory: {}".format(path))
 
-def main() -> None:
+
+def arithmetic(exp) -> None:
+    exp = exp.strip()
+
+    if ["+","-","*","/"] in exp:
+        print(exp)
+    else:
+        print("psh: invalid arithmetic expression")
+
+
+
+
+def main(PS1: str = "") -> None:
+        pass
 
         while True:
             try:
-                cmd = input(f"\n[{os.getcwd()}]$ ")
+                cmd = input(PS1)
 
                 if cmd.isspace() or cmd == "":
                     continue
-                if cmd == "exit":
+                elif cmd.startswith("%"):
+                    arithmetic(cmd[1:])
+                elif cmd == "exit":
                     break
                 elif cmd[:3] == "cd ":
                     msh_cd(cmd[3:])
@@ -79,6 +116,65 @@ def main() -> None:
             except EOFError:
                 break
 
+#def parse_conf(file: str) -> None:
+#    if os.path.isfile(file) and file.endswith(".msh"):
+#        pass
+#    else:
+#        pass
+
+def usage() -> None:
+    print("""msh, version %s
+    
+Usage:  msh [option] ...
+
+Options:
+        -h, --help          print this help message
+        -p , --prompt       primary prompt
+
+Shell options:
+          PS1=primary prompt
+                u for username
+                h for hostname
+                w for working directory
+            
+            eg: msh PS1="[{u}@{h} {w}]$ "
+
+          """ % __version__)
+
+
+def args() -> None:
+
+    args = {
+#         "c": ["-c","--config"],
+          "h": ["-h", "--help"]
+          }
+
+
+    if len(argv) == 2 and argv[1].startswith("PS1"):
+        try:
+            PS1 = f"{argv[1].split("=")[1]}".replace("{u}",u).replace("{h}",h).replace("{w}",w)
+            
+            main(PS1)
+        except IndexError:
+            print(f"msh: unrecognized option '{argv[1]}'")
+            print("Try 'msh --help' for more information.")
+    elif len(argv) > 1:
+
+        if (argv[1] in args["h"]):
+            usage()
+
+        else:
+
+            print(f"msh: unrecognized option '{argv[1]}'")
+            print("Try 'msh --help' for more information.")
+    else:
+        
+        main()
+
+
+
+
+
 
 if '__main__' == __name__:
-    main()
+    args()
