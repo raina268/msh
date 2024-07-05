@@ -17,9 +17,30 @@ $ ./msh
 
 ```
 
+```bash
+
+msh, version 1.0
+
+Usage:  msh [option] ...
+
+Options:
+        -h, --help          print this help message
+        -p , --prompt       primary prompt
+
+Shell options:
+          PS1=primary prompt
+                u for username
+                h for hostname
+                w for working directory
+
+            eg: msh PS1="[{u}@{h} {w}]$ "
+
+```
+    
 
 
-#TODO
+
+# TODO
 
 [ ] arithmetic operations support
 [ ] implement config file  parser
