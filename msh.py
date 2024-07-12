@@ -1,3 +1,5 @@
+#!/bin/python3
+
 from subprocess import run as sub_run
 from sys import argv
 import os
