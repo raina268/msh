@@ -5,6 +5,20 @@ a simple and minimal shell written in python with piping support
 
 Note: This is not meant to be a replacement for your daily driver. Though, technically you can use it if you want.
 
+# config file
+
+```bash
+
+alias ls="ls -alh --color"
+
+PS1 = "$ "
+
+! comments
+
+HISSIZE = 1000
+HISFILE = $HOME/.msh_his
+```
+
 # usage
 
 ```bash
@@ -42,5 +56,4 @@ Shell options:
 
 # TODO
 
-[ ] arithmetic operations support
-[ ] implement config file  parser
+implement history 

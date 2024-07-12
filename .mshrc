@@ -1,0 +1,10 @@
+
+
+alias ls="ls -alh --color"
+
+PS1 = "$ "
+
+! comments
+
+HISSIZE = 1000  ! 100 lines
+HISFILE = $HOME/.msh_his
