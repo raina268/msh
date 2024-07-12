@@ -27,7 +27,7 @@ $ python3 msh.py
 
 # or
 
-$ ./msh
+$ ./msh.py
 
 ```
 

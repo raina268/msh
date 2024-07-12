@@ -102,6 +102,10 @@ def parse_conf():
 
     if not os.path.exists(file_path):
         print(f"msh: configuration file '{file_path}' not found.")
+        print(f"creating {file_path}\n")
+
+        with open(file_path, mode='w'):
+            pass
         return
 
     try:
