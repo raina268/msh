@@ -83,7 +83,6 @@ def execute_cmd(cmd):
         else:
             sub_run(cmd.split(" "))
     except Exception as e:
-        print(e)
         print("msh: command not found: {}".format(cmd))
 
 def msh_alias(cmd) -> None:
