@@ -116,6 +116,9 @@ def parse_conf():
                     msh_alias(line)
                 elif line.startswith('PS1'):
                     parse_ps1(line, True)
+                else:
+                    sub_run(line.split())
+
 
     except Exception as e:
         print(f"msh: error parsing configuration file '{file_path}': {e}")
